@@ -1,4 +1,4 @@
-# GnosisLab Codie Style Guide
+# GnosisLab Code Style Guide
 
 ## Git
 
