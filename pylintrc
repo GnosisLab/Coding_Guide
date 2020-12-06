@@ -1,11 +1,9 @@
 [MASTER]
 
-# Specify a configuration file.
-#rcfile=
-
-# Python code to execute, usually for sys.path manipulation such as
-# pygtk.require().
-#init-hook=
+# A comma-separated list of package or module names from where C extensions may
+# be loaded. Extensions are loading into the active Python interpreter and may
+# run arbitrary code.
+extension-pkg-whitelist=cv2
 
 # Profiled execution.
 profile=no
@@ -20,6 +18,14 @@ persistent=yes
 # List of plugins (as comma separated values of python modules names) to load,
 # usually to register additional checkers.
 load-plugins=
+
+# When enabled, pylint would attempt to guess common misconfiguration and emit
+# user-friendly hints instead of false-positive error messages.
+suggestion-mode=yes
+
+# Allow loading of arbitrary C extensions. Extensions are imported into the
+# active Python interpreter and may run arbitrary code.
+unsafe-load-any-extension=no
 
 
 [MESSAGES CONTROL]
@@ -100,6 +106,17 @@ generated-members=REQUEST,acl_users,aq_parent
 contextmanager-decorators=contextlib.contextmanager,contextlib2.contextmanager
 
 
+[REFACTORING]
+
+# Maximum number of nested blocks for function / method body
+max-nested-blocks=5
+
+# Complete name of functions that never returns. When checking for
+# inconsistent-return-statements if a never returning function is called then
+# it will be considered as an explicit return statement and no message will be
+# printed.
+never-returning-functions=sys.exit
+
 [VARIABLES]
 
 # Tells whether we should check for unused import in __init__ files.
@@ -112,6 +129,11 @@ dummy-variables-rgx=^\*{0,2}(_$|unused_|dummy_)
 # List of additional names supposed to be defined in builtins. Remember that
 # you should avoid to define new builtins when possible.
 additional-builtins=
+
+# List of strings which can identify a callback function by name. A callback
+# name must start or end with one of those strings.
+callbacks=cb_,
+          _cb
 
 
 [BASIC]
@@ -176,6 +198,9 @@ docstring-min-length=10
 
 [FORMAT]
 
+# Expected format of line ending, e.g. empty (any line ending), LF or CRLF.
+expected-line-ending-format=LF
+
 # Maximum number of characters on a single line.
 max-line-length=80
 
@@ -192,6 +217,9 @@ ignore-long-lines=(?x)
    |lambda
    |(https?|ftp):)
 
+# Number of spaces of indent required inside a hanging or continued line.
+indent-after-paren=2
+
 # Allow the body of an if to be on the same line as the test if there is no
 # else.
 single-line-if-stmt=y
@@ -200,11 +228,19 @@ single-line-if-stmt=y
 no-space-check=
 
 # Maximum number of lines in a module
-max-module-lines=99999
+max-module-lines=1000
 
 # String used as indentation unit. This is usually " " (4 spaces) or "\t" (1
 # tab).
 indent-string='  '
+
+# Allow the body of a class to be on the same line as the declaration if body
+# contains single statement.
+single-line-class-stmt=no
+
+# Allow the body of an if to be on the same line as the test if there is no
+# else.
+single-line-if-stmt=no
 
 
 [SIMILARITIES]
@@ -225,7 +261,31 @@ ignore-imports=no
 [MISCELLANEOUS]
 
 # List of note tags to take in consideration, separated by a comma.
-notes=
+notes=FIXME,
+      XXX,
+      TODO
+
+
+[LOGGING]
+
+# The type of string formatting that logging methods do. `old` means using %
+# formatting, `new` is for `{}` formatting.
+logging-format-style=old
+
+# Logging modules to check that the string format arguments are in logging
+# function parameter format.
+logging-modules=logging
+
+
+[STRING]
+
+# This flag controls whether inconsistent-quotes generates a warning when the
+# character used as a quote delimiter is used inconsistently within a module.
+check-quote-consistency=yes
+
+# This flag controls whether the implicit-str-concat should generate a warning
+# on implicit string concatenation in sequences defined over several lines.
+check-str-concat-over-line-jumps=no
 
 
 [IMPORTS]
@@ -321,7 +381,6 @@ deprecated-members=string.atof,string.atoi,string.atol,string.capitalize,string.
 ignore-exceptions=AssertionError,NotImplementedError,StopIteration,TypeError
 
 
-
 [TOKENS]
 
 # Number of spaces of indent required when the last token on the preceding line
@@ -329,7 +388,7 @@ ignore-exceptions=AssertionError,NotImplementedError,StopIteration,TypeError
 indent-after-paren=4
 
 
-[GOOGLE LINES]
+[GNOSISLAB LINES]
 
 # Regexp for a proper copyright notice.
-copyright=Copyright \d{4} The TensorFlow Authors\. +All [Rr]ights [Rr]eserved\.
+copyright=Copyright \d{4} The GnosisLab Authors\. +All [Rr]ights [Rr]eserved\.
